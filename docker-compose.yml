@@ -1,7 +1,7 @@
-version: '3.8'
 
 services:
-  # --- BASE DE DATOS (MySQL) ---
+  #my sql
+  
   db:
     image: mysql:8.0
     container_name: electrotrack-db
@@ -21,9 +21,10 @@ services:
       timeout: 5s
       retries: 5
 
-  # --- BACKEND (Node.js API) ---
+  #Node  js
   api:
     build: ./backend
+    image: electrotrack/api:node24
     container_name: electrotrack-api
     restart: unless-stopped
     ports:
@@ -43,9 +44,10 @@ services:
         condition: service_healthy
     command: npm run dev
 
-  # --- MÓVIL (React Native + Expo) ---
+  #React native
   mobile:
     build: ./mobile
+    image: electrotrack/mobile:node24-expo
     container_name: electrotrack-mobile
     stdin_open: true
     tty: true
